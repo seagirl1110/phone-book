@@ -1,7 +1,6 @@
 <template>
   <div id="app">
     <AppBtn @click="openUserAddForm">Добавить</AppBtn>
-    <!-- <AppBtn @click="usersFlatList(users)">New users</AppBtn> -->
     <PhoneBook :users="users" />
     <UserAddForm :users="usersFlatList" :isShowForm="isShowUserAddForm" @add-new-user="AddNewUser"
       @close-user-add-from="closeUserAddForm" />
@@ -12,6 +11,7 @@
 import AppBtn from './components/AppBtn';
 import PhoneBook from './components/PhoneBook';
 import UserAddForm from './components/UserAddForm';
+import { getData, setData } from './api/index';
 
 export default {
   name: 'App',
@@ -20,54 +20,12 @@ export default {
     AppBtn,
     UserAddForm,
   },
+  created() {
+    this.users = getData();
+  },
   data() {
     return {
-      users: [
-        {
-          id: 1,
-          name: 'Марина',
-          phone: '+7 941 123 21 42',
-          isBoss: false,
-          employees: [],
-        },
-        {
-          id: 2,
-          name: 'Петр',
-          phone: '+7 941 123 21 42',
-          isBoss: false,
-          employees: [],
-        },
-        {
-          id: 3,
-          name: 'Алексей',
-          phone: '+7 941 123 21 42',
-          isBoss: true,
-          employees: [
-            {
-              id: 4,
-              name: 'Иван',
-              phone: '+7 941 123 21 42',
-              isBoss: true,
-              employees: [
-                {
-                  id: 5,
-                  name: 'Ирина',
-                  phone: '+7 941 123 21 42',
-                  isBoss: false,
-                  employees: [],
-                },
-              ],
-            },
-          ],
-        },
-        {
-          id: 6,
-          name: 'Борис',
-          phone: '+7 941 123 21 42',
-          isBoss: false,
-          employees: [],
-        },
-      ],
+      users: [],
       isShowUserAddForm: false,
     };
   },
@@ -87,12 +45,28 @@ export default {
         employees: [],
       };
       if (bossID !== null) {
-        const index = this.users.findIndex(user => user.id === bossID);
-        this.users[index].isBoss = true;
-        this.users[index].employees.push(newUser);
+        const boss = this.findBoss(this.users, bossID);
+        boss.isBoss = true;
+        boss.employees.push(newUser);
       } else {
         this.users.push(newUser);
       }
+      setData(this.users);
+    },
+    findBoss(users, id) {
+      let boss = null;
+      users.forEach((user) => {
+        if (user.id === id) {
+          boss = user;
+        }
+        if (user.employees.length > 0) {
+          const found = this.findBoss(user.employees, id);
+          if (found) {
+            boss = found;
+          }
+        }
+      });
+      return boss;
     },
     getUsersFlatList(users) {
       let list = [];
@@ -102,7 +76,6 @@ export default {
           list = [...list, ...this.getUsersFlatList(user.employees)];
         }
       });
-      console.log(list);
       return list;
     },
   },

@@ -1,8 +1,8 @@
 <template>
-  <ul class="users">
+  <ul class="users" @click="toggleShowEmployess">
     <li v-for="user in users" :key="user.id" class="user">
       <div class="user__info-wrapper">
-        <div class="user__info user-info--name" @click="toggleShowEmployess">
+        <div class="user__info user-info--name">
           <div class="user__is-boss">{{ user.isBoss ? '+' : '' }}</div>
           <div>{{ user.name }}</div>
         </div>
@@ -18,7 +18,7 @@ export default {
   name: 'UsersList',
   data() {
     return {
-      isShowEployess: false,
+      isShowEployess: true,
     };
   },
   props: {
