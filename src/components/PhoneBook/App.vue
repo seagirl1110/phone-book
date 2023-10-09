@@ -83,11 +83,10 @@ export default {
 };
 </script>
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
 .phone-book {
   width: 100%;
-  max-width: 700px;
+  margin: 10px;
 }
 
 .phone-book__header {
@@ -99,6 +98,7 @@ export default {
   flex: 1 1 150px;
   padding: 10px 15px;
   border: 1px solid #cccccc;
+  cursor: pointer;
 }
 
 .phone-book__name {
