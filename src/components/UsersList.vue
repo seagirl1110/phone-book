@@ -1,5 +1,5 @@
 <template>
-  <ul class="users" @click="toggleShowEmployess">
+  <ul class="users">
     <li v-for="user in users" :key="user.id" class="user">
       <div class="user__info-wrapper">
         <div class="user__info user-info--name">
@@ -16,20 +16,10 @@
 <script>
 export default {
   name: 'UsersList',
-  data() {
-    return {
-      isShowEployess: true,
-    };
-  },
   props: {
     users: {
       type: Array,
       required: true,
-    },
-  },
-  methods: {
-    toggleShowEmployess() {
-      this.isShowEployess = !this.isShowEployess;
     },
   },
 };
