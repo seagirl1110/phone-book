@@ -9,7 +9,7 @@
 
 <script>
 import AppBtn from './components/AppBtn';
-import PhoneBook from './components/PhoneBook';
+import PhoneBook from './components/PhoneBook/App';
 import UserAddForm from './components/UserAddForm';
 import { getData, setData } from './api/index';
 

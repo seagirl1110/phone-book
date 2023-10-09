@@ -16,7 +16,8 @@
     </div>
     <div class="form__item form-item">
       <label for="phone" class="form-item__label">Телефон</label>
-      <input v-model="phoneValue" type="tel" id="phone" class="form-item__data">
+      <input v-model="phoneValue" type="tel" placeholder="+7 999 000 00 00" id="phone"
+      class="form-item__data">
     </div>
     <div class="form__item form-item">
       <div class="form-item__label">Начальник</div>

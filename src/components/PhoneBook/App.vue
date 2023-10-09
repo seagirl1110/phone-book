@@ -12,7 +12,7 @@
 import UsersList from './UsersList';
 
 export default {
-  name: 'PhoneBook',
+  name: 'App',
   data() {
     return {
       sort: {
