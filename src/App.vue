@@ -69,7 +69,7 @@ export default {
       users.forEach((user) => {
         if (user.employees.length > 0) {
           const found = this.findBoss(user.employees, id);
-          if (found !== null) {
+          if (typeof found !== 'undefined') {
             boss = found;
           }
         }
