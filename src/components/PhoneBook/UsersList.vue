@@ -8,6 +8,7 @@
         </div>
         <div class="user__info user-info--phone">{{ user.phone }}</div>
       </div>
+
       <UsersList v-if="user.employees.length > 0" :users="user.employees" />
     </li>
   </ul>

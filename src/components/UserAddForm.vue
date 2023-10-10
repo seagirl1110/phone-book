@@ -11,16 +11,19 @@
           </svg>
         </AppBtn>
       </div>
+
       <div class="form__item form-item">
         <label for="name" class="form-item__label">Имя</label>
         <input v-model="nameValue" @input="validateFormData" type="text" id="name"
           class="form-item__data">
       </div>
+
       <div class="form__item form-item">
         <label for="phone" class="form-item__label">Телефон</label>
         <input v-model="phoneValue" @input="validateFormData" type="tel" v-mask="'+7 ### ### ## ##'"
           placeholder="+7 999 000 00 00" id="phone" class="form-item__data">
       </div>
+
       <div class="form__item form-item">
         <div class="form-item__label">Начальник</div>
         <select v-model="bossValue" name="boss" class="form-item__data">
@@ -30,10 +33,12 @@
           </option>
         </select>
       </div>
+
       <div v-if="formErrors.length > 0" v-for="error in formErrors" :key="error"
         class="form__error-data">
         {{ error}}
       </div>
+
       <AppBtn @click="onSaveBtnClick">Сохранить</AppBtn>
     </div>
   </div>
@@ -88,8 +93,7 @@ export default {
       }
       if (this.phoneValue === null || this.phoneValue.trim() === '') {
         this.formErrors.push('Не заполнено поле "Телефон"');
-      }
-      if (this.phoneValue.length < 16) {
+      } else if (this.phoneValue.length < 16) {
         this.formErrors.push('Телефонный номер введен не полностью');
       }
       return this.formErrors.length === 0;

@@ -4,6 +4,7 @@
       <div @click="setSortValue('name')" class="phone-book__name">Имя</div>
       <div @click="setSortValue('phone')" class="phone-book__phone">Телефон</div>
     </div>
+
     <UsersList :users="sortedUsers" />
   </div>
 </template>
