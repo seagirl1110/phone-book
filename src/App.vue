@@ -62,11 +62,12 @@ export default {
     },
 
     findBoss(users, id) {
-      let boss = null;
+      let boss = users.find(user => user.id === id);
+      if (typeof boss !== 'undefined') {
+        return boss;
+      }
       users.forEach((user) => {
-        if (user.id === id) {
-          boss = user;
-        } else if (user.employees.length > 0) {
+        if (user.employees.length > 0) {
           const found = this.findBoss(user.employees, id);
           if (found !== null) {
             boss = found;
