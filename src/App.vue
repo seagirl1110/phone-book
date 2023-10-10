@@ -3,8 +3,8 @@
     <div class="center-container">
       <AppBtn @click="openUserAddForm" class="btn-add">Добавить</AppBtn>
       <PhoneBook :users="users" />
-      <UserAddForm :users="usersFlatList" :isShowForm="isShowUserAddForm" @add-new-user="AddNewUser"
-        @close-user-add-from="closeUserAddForm" />
+      <UserAddForm :users="sortedUsersFlatList" :isShowForm="isShowUserAddForm"
+        @add-new-user="addNewUser" @close-user-add-from="closeUserAddForm" />
     </div>
   </div>
 </template>
@@ -22,23 +22,28 @@ export default {
     AppBtn,
     UserAddForm,
   },
+
   created() {
     this.users = getData();
   },
+
   data() {
     return {
       users: [],
       isShowUserAddForm: false,
     };
   },
+
   methods: {
     openUserAddForm() {
       this.isShowUserAddForm = true;
     },
+
     closeUserAddForm() {
       this.isShowUserAddForm = false;
     },
-    AddNewUser(name, phone, bossID) {
+
+    addNewUser(name, phone, bossID) {
       const newUser = {
         id: new Date().getTime(),
         name,
@@ -55,21 +60,22 @@ export default {
       }
       setData(this.users);
     },
+
     findBoss(users, id) {
       let boss = null;
       users.forEach((user) => {
         if (user.id === id) {
           boss = user;
-        }
-        if (user.employees.length > 0) {
+        } else if (user.employees.length > 0) {
           const found = this.findBoss(user.employees, id);
-          if (found) {
+          if (found !== null) {
             boss = found;
           }
         }
       });
       return boss;
     },
+
     getUsersFlatList(users) {
       let list = [];
       users.forEach((user) => {
@@ -81,9 +87,11 @@ export default {
       return list;
     },
   },
+
   computed: {
-    usersFlatList() {
-      return this.getUsersFlatList(this.users);
+    sortedUsersFlatList() {
+      return (this.getUsersFlatList(this.users)
+        .sort((user1, user2) => user1.name.localeCompare(user2.name)));
     },
   },
 };
